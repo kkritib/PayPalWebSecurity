@@ -1,0 +1,40 @@
+﻿@model IEnumerable<PayPalWebSecurity.ViewModels.RoleVM>
+
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<h3>@ViewBag.UserName</h3>
+
+<p>
+    @Html.ActionLink("Assign Roles", "Create",
+                     new { userName = @ViewBag.UserName })
+</p> 
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RoleName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.RoleName)
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <a asp-controller="User" asp-action="Index">Back to User List</a>
+</div>
+

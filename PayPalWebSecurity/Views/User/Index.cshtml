@@ -1,0 +1,36 @@
+﻿@model IEnumerable<PayPalWebSecurity.ViewModels.UserVM>
+
+@{
+    ViewData["Title"] = "User";
+}
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <td> Users </td>    
+            <td> <a href="/User/Create">Create New User Role</a></td>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td>
+                    @item.Email
+                    </td>
+                    <td>
+                    @Html.ActionLink(
+                        "View Roles"
+                      , "Detail"
+                      , new { userName = item.Email })
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>
+
+
+

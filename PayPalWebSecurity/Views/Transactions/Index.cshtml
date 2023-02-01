@@ -1,0 +1,82 @@
+﻿@using System.Globalization;
+@model IEnumerable<PayPalWebSecurity.Models.IPN>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="text-center">
+    <div b-6eg8tbgho9="" class="display-6"><strong b-6eg8tbgho9="">Deck Master</strong></div>
+</div>
+
+<hr b-6eg8tbgho9="">
+<div class="row">
+    <div class="col-sm-6" style="">
+        <span class="display-6">Transactions</span>
+    </div>
+    <div class="col-sm-6" style="">
+        <span class="d-flex justify-content-end">
+            <img src="/images/PayPal.png" alt="PayPal" style="max-width: 200px;padding-bottom: 10px;">
+        </span>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                PaymentID
+            </th>
+            <th>
+                Created
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Amount
+            </th>
+            <th>
+                MOP
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            string paymentid = item.paymentID.Split('-')[1];
+            string datee = item.create_time;
+            DateTime date = DateTime.ParseExact(datee, "yyyy-MM-dd'T'HH:mm:ss'Z'", CultureInfo.InvariantCulture);
+            string created = date.ToString("yyyy-MM-dd hh:mm:ss");
+            decimal amountCurr = Convert.ToDecimal(item.amount);
+            string amountC = amountCurr.ToString("C") + " " + item.currency;
+            Console.WriteLine(amountC);
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => paymentid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => created)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.payerFirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.payerEmail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => amountC)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.paymentMethod)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
