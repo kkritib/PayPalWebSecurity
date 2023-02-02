@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PayPalWebSecurity.Data;
+using PayPalWebSecurity.Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,27 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<IEmailService, EmailService>();
+
+builder.Services.Configure<IdentityOptions>(options => {
+    //// Password settings if you want to ensure password strength.
+    //options.Password.RequireDigit           = true;
+    //options.Password.RequiredLength         = 8;
+    //options.Password.RequireNonAlphanumeric = false;
+    //options.Password.RequireUppercase       = true;
+    //options.Password.RequireLowercase       = false;
+    //options.Password.RequiredUniqueChars    = 6;
+
+    // Lockout settings (Freeze 1 minute only to make testing easier)
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
+    options.Lockout.MaxFailedAccessAttempts = 3; // Lock after 
+                                                 // 3 consec failed logins
+    options.Lockout.AllowedForNewUsers = true;
+
+    // User settings
+    options.User.RequireUniqueEmail = true;
+});
+
 
 var app = builder.Build();
 
